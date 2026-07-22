@@ -12,9 +12,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #fce4ec;
-            background-image: radial-gradient(circle at center, #f8bbd0 0%, #fce4ec 100%);
-            color: #4a2e35;
+            background-color: #050305;
+            background-image: radial-gradient(circle at center, #24060d 0%, #050305 100%);
+            color: #fce4e4;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -24,19 +24,90 @@
             position: relative;
         }
 
+        /* Neon Heart Animation Screen */
+        #neonScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            z-index: 50;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        #neonScreen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .neon-title {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: #ffb3c1;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 107, 129, 0.5);
+        }
+
+        /* SVG Neon Heart from images */
+        .neon-heart-box {
+            position: relative;
+            width: 180px;
+            height: 160px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulseNeon 1.2s ease-in-out infinite;
+        }
+
+        .neon-heart-box svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 15px #ff3366) drop-shadow(0 0 30px #ff3366);
+        }
+
+        @keyframes pulseNeon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .neon-hint {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #ff99aa;
+            letter-spacing: 0.5px;
+            animation: fadeInOut 2s infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Container for Envelope */
         .container {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -30px;
+            margin-top: -20px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+        .container.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
         }
 
         /* Envelope Styling */
         .envelope-wrapper {
             position: relative;
             cursor: pointer;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .envelope {
@@ -46,10 +117,9 @@
             background: #ff758c;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
-        /* Envelope Pocket Front */
         .envelope::before {
             content: "";
             position: absolute;
@@ -65,7 +135,6 @@
             z-index: 3;
         }
 
-        /* Envelope Pocket Sides */
         .envelope::after {
             content: "";
             position: absolute;
@@ -80,7 +149,6 @@
             z-index: 2;
         }
 
-        /* Envelope Flap (Top) */
         .flap {
             position: absolute;
             top: 0;
@@ -95,7 +163,6 @@
             z-index: 4;
         }
 
-        /* Letter Inside */
         .letter {
             position: absolute;
             bottom: 0;
@@ -104,12 +171,13 @@
             height: 170px;
             background: #ffffff;
             border-radius: 8px;
-            padding: 20px 15px;
+            padding: 18px 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.4s ease-in-out 0.1s;
             z-index: 1;
             text-align: right;
             overflow-y: auto;
+            color: #4a2e35;
         }
 
         .letter::-webkit-scrollbar {
@@ -121,7 +189,7 @@
         }
 
         .letter h3 {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: #d81b60;
             margin-bottom: 8px;
             font-family: 'Georgia', serif;
@@ -133,7 +201,6 @@
             color: #555;
         }
 
-        /* Open State classes */
         .envelope-wrapper.open .flap {
             transform: rotateX(180deg);
             z-index: 0;
@@ -142,10 +209,9 @@
         .envelope-wrapper.open .letter {
             transform: translateY(-110px);
             z-index: 5;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        /* Buttons Styling */
         .btn-group {
             display: flex;
             gap: 15px;
@@ -153,11 +219,11 @@
         }
 
         .btn {
-            background: #ffffff;
+            background: rgba(18, 7, 11, 0.85);
             border: 2px solid #ff5270;
-            color: #ff5270;
-            padding: 10px 28px;
-            font-size: 0.9rem;
+            color: #ffb3c1;
+            padding: 9px 26px;
+            font-size: 0.88rem;
             font-weight: bold;
             border-radius: 20px;
             cursor: pointer;
@@ -172,27 +238,22 @@
             transform: translateY(-2px);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
         .music-control {
             position: fixed;
             top: 15px;
             left: 15px;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(18, 7, 11, 0.85);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 82, 112, 0.35);
+            border: 1px solid rgba(255, 77, 109, 0.35);
             padding: 8px 14px;
             border-radius: 20px;
-            color: #d81b60;
+            color: #ffb3c1;
             font-size: 0.78rem;
             cursor: pointer;
             z-index: 100;
             display: flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -206,14 +267,26 @@
         <span id="mIcon">🎵</span> <span id="mText">لێدانی مۆسیقا</span>
     </div>
 
-    <div class="container">
+    <!-- Step 1: Neon Heart Animation Screen -->
+    <div id="neonScreen" onclick="revealEnvelope()">
+        <div class="neon-title">Heart Animation</div>
+        <div class="neon-heart-box">
+            <svg viewBox="0 0 32 29.6">
+                <path fill="none" stroke="#ff3366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M16,28.2c0,0-14.5-9.7-14.5-17.5C1.5,6.3,5.3,2.5,10,2.5c3.2,0,5.9,1.8,7.3,4.5C18.7,4.3,21.4,2.5,24.6,2.5c4.7,0,8.5,3.8,8.5,8.2C33.1,18.5,16,28.2,16,28.2z"/>
+            </svg>
+        </div>
+        <div class="neon-hint">کلیک لەسەر دڵەکە بکە بۆ کردنەوەی زەرفەکە ✨</div>
+    </div>
+
+    <!-- Step 2: Main Envelope Screen -->
+    <div class="container" id="mainContainer">
         <div class="envelope-wrapper" id="envelopeWrapper">
             <div class="envelope">
                 <div class="flap"></div>
                 <div class="letter">
                     <h3>Para ti, mi amor ❤️</h3>
-                    <p>گیانەکەم، دەزانم ئەو قسە یان ڤۆیسەی پێشووم دڵی شکاندیت، سوێند دەخۆم تەنها ساتی تووڕەیی یان هەڵە بوو و مەبەستم نەبوو دەستی تێدا هەبێت کە بتڕەنجێنم. زۆر پەشیمانم کە بوومە هۆی ئەوەی دڵگران ببیت.</p>
-                    <p style="margin-top: 8px;">لێرەوە بە ڕوونی پێدەڵێم: <strong>ئیتر تەواو!</strong> بە هیچ شێوەیەک، قەت لە ژیانمدا لەگەڵ هیچ کەسێکی تردا لە ڤۆیس یان لە چاتدا نابم. تەنها و تەنها تۆ شازنی دڵمی و کەس جێگات ناگرێتەوە! تکایە لە من ببورە 🥺💖</p>
+                    <p>لۆرا لەمە و دوا لەگەڵ کچدا نامێنم، تەنها تۆ و هەر قسەیەک کە تۆ ئەیکەیت و ئێتر خۆشت تووڕە مخە. 🥺💖</p>
+                    <p style="margin-top: 6px; font-size: 0.77rem; color: #d81b60;"><strong>تێبینی:</strong> ڕێپلەی کوریش مەکەوە 🙂</p>
                 </div>
             </div>
         </div>
@@ -225,11 +298,13 @@
     </div>
 
     <script>
-        const envelope = document.getElementById('envelopeWrapper');
         const music = document.getElementById('bgMusic');
+        const neonScreen = document.getElementById('neonScreen');
+        const mainContainer = document.getElementById('mainContainer');
+        const envelope = document.getElementById('envelopeWrapper');
         let musicPlaying = false;
 
-        function playMusicOnce() {
+        function startMusic() {
             if (!musicPlaying) {
                 music.play().then(() => {
                     musicPlaying = true;
@@ -239,8 +314,14 @@
             }
         }
 
+        function revealEnvelope() {
+            startMusic();
+            neonScreen.classList.add('hidden');
+            mainContainer.classList.add('active');
+        }
+
         function openEnvelope() {
-            playMusicOnce();
+            startMusic();
             envelope.classList.add('open');
         }
 
@@ -248,9 +329,7 @@
             envelope.classList.remove('open');
         }
 
-        // Tap on envelope directly to toggle open/close
         envelope.addEventListener('click', () => {
-            playMusicOnce();
             envelope.classList.toggle('open');
         });
 
