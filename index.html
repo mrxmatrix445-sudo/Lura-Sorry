@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تایبەت بە لۆرا گیان ❤️ داوای لێبووردن</title>
+    <title>بۆ لۆرا گیان ❤️</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,7 +13,7 @@
         }
         body {
             background-color: #050305;
-            background-image: radial-gradient(circle at center, #1f050b 0%, #050305 100%);
+            background-image: radial-gradient(circle at center, #24060d 0%, #050305 100%);
             color: #fce4e4;
             min-height: 100vh;
             display: flex;
@@ -23,8 +23,8 @@
             position: relative;
         }
         
-        /* Floating Hearts Animation */
-        .hearts-bg {
+        /* Floating Red Petals/Hearts */
+        .bg-fx {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -32,17 +32,17 @@
             z-index: 1;
             pointer-events: none;
         }
-        .heart {
+        .particle {
             position: absolute;
-            font-size: 20px;
-            color: rgba(255, 107, 129, 0.2);
-            animation: floatUp 10s linear infinite;
+            font-size: 18px;
+            color: rgba(255, 77, 109, 0.25);
+            animation: floatUp 8s linear infinite;
             bottom: -50px;
         }
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
             20% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-100vh) scale(1.3) rotate(360deg); opacity: 0; }
         }
 
         .container {
@@ -50,134 +50,145 @@
             z-index: 10;
             width: 90%;
             max-width: 380px;
-            background: rgba(20, 8, 12, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 107, 129, 0.3);
-            border-radius: 24px;
-            padding: 30px 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 25px rgba(255, 107, 129, 0.1);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .screen {
             display: none;
+            width: 100%;
             flex-direction: column;
             align-items: center;
+            animation: fadeIn 0.8s ease-in-out;
         }
         .screen.active {
             display: flex;
         }
-
-        .icon-box {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            animation: pulseIcon 2s infinite ease-in-out;
-        }
-        @keyframes pulseIcon {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        h1 {
-            font-size: 1.5rem;
-            color: #ff879e;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-        p {
-            color: #d1b2b9;
-            font-size: 0.9rem;
-            margin-bottom: 22px;
-            line-height: 1.7;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #7a1f31, #3d0a14);
-            border: 1px solid rgba(255, 107, 129, 0.4);
+        /* Title style */
+        .title-top {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.8rem;
             color: #ffb3c1;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            transition: all 0.3s ease;
-            width: 100%;
-            font-weight: 600;
-        }
-        .btn:hover {
-            background: linear-gradient(135deg, #99283e, #4d0d1a);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.3);
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255,107,129,0.4);
         }
 
-        /* Passcode styling */
-        .dots {
+        /* Fingerprint scanner circle */
+        .scanner-box {
+            position: relative;
+            width: 170px;
+            height: 170px;
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin: 15px 0 25px 0;
-        }
-        .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 107, 129, 0.3);
-        }
-        .dot.active {
-            background: #ff6b81;
-            box-shadow: 0 0 10px #ff6b81;
-        }
-
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            width: 100%;
-        }
-        .key {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 107, 129, 0.15);
-            padding: 15px;
-            border-radius: 14px;
-            color: #fff;
-            font-size: 1.2rem;
+            align-items: center;
             cursor: pointer;
-            transition: 0.2s;
-        }
-        .key:active {
-            background: rgba(255, 107, 129, 0.4);
+            margin: 20px auto;
+            user-select: none;
         }
 
-        /* Letter View */
-        .letter-content {
-            background: rgba(10, 3, 5, 0.6);
-            border: 1px solid rgba(255, 107, 129, 0.2);
-            padding: 15px;
-            border-radius: 16px;
-            max-height: 280px;
-            overflow-y: auto;
+        svg.ring-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 4;
+        }
+        .ring-progress {
+            fill: none;
+            stroke: #ff3366;
+            stroke-width: 4;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 0.1s linear;
+            stroke-linecap: round;
+        }
+
+        .fingerprint-icon {
+            font-size: 4.5rem;
+            color: #ff4d6d;
+            filter: drop-shadow(0 0 12px rgba(255, 77, 109, 0.6));
+            transition: 0.3s;
+        }
+        .scanner-box:active .fingerprint-icon {
+            transform: scale(0.92);
+            color: #ff99aa;
+        }
+
+        .hint-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #ff99aa;
+            letter-spacing: 0.5px;
+            animation: pulseHint 2s infinite;
+        }
+        @keyframes pulseHint {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Letter & Message screen */
+        .card-box {
+            background: rgba(18, 7, 11, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 77, 109, 0.35);
+            border-radius: 26px;
+            padding: 25px 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.85), 0 0 30px rgba(255, 77, 109, 0.15);
+            width: 100%;
             text-align: right;
-            font-size: 0.88rem;
-            line-height: 1.8;
-            color: #f3d6dc;
+        }
+
+        .card-box h2 {
+            text-align: center;
+            font-size: 1.35rem;
+            color: #ff758c;
             margin-bottom: 15px;
         }
-        .letter-content::-webkit-scrollbar {
-            width: 4px;
+
+        .message-text {
+            font-size: 0.89rem;
+            line-height: 1.9;
+            color: #f7d9df;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-left: 5px;
         }
-        .letter-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 107, 129, 0.3);
+        .message-text::-webkit-scrollbar {
+            width: 3px;
+        }
+        .message-text::-webkit-scrollbar-thumb {
+            background: rgba(255, 77, 109, 0.4);
             border-radius: 10px;
+        }
+
+        .signature {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #ffa3b4;
+            border-top: 1px dashed rgba(255,77,109,0.3);
+            padding-top: 10px;
         }
 
         .music-control {
             position: fixed;
             top: 15px;
             left: 15px;
-            background: rgba(20, 8, 12, 0.8);
+            background: rgba(18, 7, 11, 0.85);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 129, 0.3);
+            border: 1px solid rgba(255, 77, 109, 0.35);
             padding: 8px 14px;
             border-radius: 20px;
             color: #ffb3c1;
@@ -192,7 +203,7 @@
 </head>
 <body>
 
-    <div class="hearts-bg" id="heartsContainer"></div>
+    <div class="bg-fx" id="particles"></div>
 
     <audio id="bgMusic" loop>
         <source src="https://dl.musicsweb.ir/music/1402/08/Mahasti%20-%20Fadat%20Sham%20(128).mp3" type="audio/mp3">
@@ -203,86 +214,110 @@
     </div>
 
     <div class="container">
-        <!-- Screen 1: Welcome -->
+        <!-- Screen 1: Fingerprint Scanner -->
         <div id="scr1" class="screen active">
-            <div class="icon-box">🥺❤️</div>
-            <h1>لۆرا گیان، بۆ ساتێک گوێم لێ بگرە...</h1>
-            <p>شتێک لە دڵمدا هەیە کە دەبێت بیزانیت، داوای لێبووردن دەکەم بۆ هەموو هەڵەیەک 😔</p>
-            <button class="btn" onclick="goToScreen(2)">کردنەوەی دەرگای دڵم 🔓</button>
-        </div>
-
-        <!-- Screen 2: Passcode Lock -->
-        <div id="scr2" class="screen">
-            <div class="icon-box" style="font-size: 2.5rem;">🔒</div>
-            <h1 style="font-size: 1.2rem;">پاسووردی تایبەت</h1>
-            <p style="font-size: 0.8rem; margin-bottom: 10px;">ڕێکەوتی لەدایکبوونەکەت بنووسە (2307)</p>
+            <div class="title-top">Para ti, mi amor</div>
             
-            <div class="dots">
-                <div class="dot" id="dot1"></div>
-                <div class="dot" id="dot2"></div>
-                <div class="dot" id="dot3"></div>
-                <div class="dot" id="dot4"></div>
+            <div class="scanner-box" id="scannerBtn">
+                <svg class="ring-svg" viewBox="0 0 200 200">
+                    <circle class="ring-bg" cx="100" cy="100" r="80"></circle>
+                    <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="80"></circle>
+                </svg>
+                <div class="fingerprint-icon">🫥</div>
             </div>
 
-            <div class="keypad">
-                <button class="key" onclick="pressNum('1')">1</button>
-                <button class="key" onclick="pressNum('2')">2</button>
-                <button class="key" onclick="pressNum('3')">3</button>
-                <button class="key" onclick="pressNum('4')">4</button>
-                <button class="key" onclick="pressNum('5')">5</button>
-                <button class="key" onclick="pressNum('6')">6</button>
-                <button class="key" onclick="pressNum('7')">7</button>
-                <button class="key" onclick="pressNum('8')">8</button>
-                <button class="key" onclick="pressNum('9')">9</button>
-                <button class="key" onclick="clearCode()" style="font-size: 0.75rem;">سڕینەوە</button>
-                <button class="key" onclick="pressNum('0')">0</button>
-                <button class="key" onclick="submitCode()" style="font-size: 0.75rem;">دڵنیایی</button>
-            </div>
+            <div class="hint-text" id="hintText">دەستت لەسەر پەنجەمۆرەکە ڕاگرە ❤️</div>
         </div>
 
-        <!-- Screen 3: The Message -->
-        <div id="scr3" class="screen">
-            <h1 style="font-size: 1.2rem; margin-bottom: 10px;">بۆ تاجەسەری من، لۆرا ❤️</h1>
-            <div class="letter-content">
-                <p>گیانەکەم، دەزانم ئەو قسە یان ڤۆیسەی پێشووم دڵی شکاندیت، سوێند دەخۆم تەنها گەمژەییەک بوو و مەبەستم نەبوو. من لێرەدا بە ڕوونی دەڵێم:</p>
-                <br>
-                <p><strong>ئیتر تەواو!</strong> بە هیچ شێوەیەک، قەت لە ژیانمدا لەگەڵ هیچ کچێکی تردا لە ڤۆیس یان لە چاتدا نابم. تەنها و تەنها تۆ شازنی دڵمی و هیچ کەسێک لە جیهاندا جێگای تیشکی چاوەکانی تۆ ناگرێتەوە.</p>
-                <br>
-                <p style="text-align: center; color: #ff879e;">تکایە لە من ببورە و با دەستپێکی نوێ ببنە ژیانمان 🥺💖</p>
+        <!-- Screen 2: Revealed Letter -->
+        <div id="scr2" class="screen">
+            <div class="card-box">
+                <h2>بۆ تاجەسەری من، لۆرا گیان ❤️</h2>
+                <div class="message-text">
+                    <p>گیانەکەم، دەزانم ئەو قسە یان ڤۆیسەی پێشووم دڵی شکاندیت، سوێند دەخۆم تەنها ساتی تووڕەیی یان هەڵە بوو و مەبەستم نەبوو دەستی تێدا هەبێت کە بتڕەنجێنم. زۆر پەشیمانم کە بوومە هۆی ئەوەی دڵگران ببیت.</p>
+                    <br>
+                    <p>لێرەوە بە ڕوونی پێدەڵێم: <strong>ئیتر تەواو!</strong> بە هیچ شێوەیەک، قەت لە ژیانمدا لەگەڵ هیچ کەسێکی تردا لە ڤۆیس یان لە چاتدا نابم. تەنها و تەنها تۆ شازنی دڵمی و هیچ کەسێک لە جیهاندا جێگای تیشکی چاوەکانی تۆ ناگرێتەوە.</p>
+                    <div class="signature">
+                        ✨ سوێند بە خۆت، تەنها تۆی لە دڵمدا و کەس جێگات ناگرێتەوە! تکایە لە من ببورە 🥺💖
+                    </div>
+                </div>
             </div>
-            <button class="btn" onclick="goToScreen(1)">دووبارە دەستپێکردنەوە 🔄</button>
         </div>
     </div>
 
     <script>
-        // Floating hearts generator
-        const container = document.getElementById('heartsContainer');
+        // Floating particles background
+        const container = document.getElementById('particles');
         setInterval(() => {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
-            container.appendChild(heart);
-            setTimeout(() => heart.remove(), 10000);
-        }, 600);
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.innerHTML = Math.random() > 0.5 ? '❤️' : '✨';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            container.appendChild(p);
+            setTimeout(() => p.remove(), 9000);
+        }, 500);
 
-        let enteredCode = "";
-        const secretCode = "2307";
+        const scannerBtn = document.getElementById('scannerBtn');
+        const ringProgress = document.getElementById('ringProgress');
+        const hintText = document.getElementById('hintText');
         const music = document.getElementById('bgMusic');
         let musicPlaying = false;
 
-        function goToScreen(num) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('scr' + num).classList.add('active');
-            if(num === 2 && !musicPlaying) {
+        const circumference = 2 * Math.PI * 80; // 502
+        ringProgress.style.strokeDasharray = circumference;
+
+        let holdTimer = null;
+        let progressInterval = null;
+        let progress = 0;
+
+        function startScanning(e) {
+            e.preventDefault();
+            
+            // Play music on touch
+            if (!musicPlaying) {
                 music.play().then(() => {
                     musicPlaying = true;
                     document.getElementById('mIcon').innerText = "🔊";
                     document.getElementById('mText').innerText = "مۆسیقا کاردەکات";
                 }).catch(e => {});
             }
+
+            hintText.innerText = "سکان دەکرێت...";
+            
+            progressInterval = setInterval(() => {
+                progress += 2;
+                let offset = circumference - (progress / 100) * circumference;
+                ringProgress.style.strokeDashoffset = offset;
+
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    hintText.innerText = "پەنجەمۆر ناسراوە ✨";
+                    setTimeout(() => {
+                        document.getElementById('scr1').classList.remove('active');
+                        document.getElementById('scr2').classList.add('active');
+                    }, 500);
+                }
+            }, 30);
         }
+
+        function stopScanning(e) {
+            e.preventDefault();
+            if (progress < 100) {
+                clearInterval(progressInterval);
+                progress = 0;
+                ringProgress.style.strokeDashoffset = circumference;
+                hintText.innerText = "دەستت لەسەر پەنجەمۆرەکە ڕاگرە ❤️";
+            }
+        }
+
+        // Touch & Mouse events for holding fingerprint
+        scannerBtn.addEventListener('mousedown', startScanning);
+        scannerBtn.addEventListener('mouseup', stopScanning);
+        scannerBtn.addEventListener('mouseleave', stopScanning);
+
+        scannerBtn.addEventListener('touchstart', startScanning);
+        scannerBtn.addEventListener('touchend', stopScanning);
 
         function toggleAudio() {
             if(musicPlaying) {
@@ -295,40 +330,6 @@
                 musicPlaying = true;
                 document.getElementById('mIcon').innerText = "🔊";
                 document.getElementById('mText').innerText = "مۆسیقا کاردەکات";
-            }
-        }
-
-        function pressNum(n) {
-            if(enteredCode.length < 4) {
-                enteredCode += n;
-                updateDotsVisual();
-            }
-        }
-
-        function clearCode() {
-            enteredCode = "";
-            updateDotsVisual();
-        }
-
-        function updateDotsVisual() {
-            for(let i=1; i<=4; i++) {
-                const dot = document.getElementById('dot' + i);
-                if(i <= enteredCode.length) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            }
-        }
-
-        function submitCode() {
-            if(enteredCode === secretCode) {
-                goToScreen(3);
-                enteredCode = "";
-                updateDotsVisual();
-            } else {
-                alert("پاسووردەکە هەڵەیە گیانەکەم! تاقیکەرەوە (2307) ❌");
-                clearCode();
             }
         }
     </script>
