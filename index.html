@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بۆ لۆرا گیان ❤️</title>
+    <title>Para ti, mi amor ❤️</title>
     <style>
         * {
             box-sizing: border-box;
@@ -23,7 +23,6 @@
             position: relative;
         }
         
-        /* Floating Red Petals/Hearts */
         .bg-fx {
             position: absolute;
             width: 100%;
@@ -71,7 +70,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Title style */
         .title-top {
             font-family: 'Georgia', serif;
             font-style: italic;
@@ -81,17 +79,18 @@
             text-shadow: 0 0 15px rgba(255,107,129,0.4);
         }
 
-        /* Fingerprint scanner circle */
+        /* Heart Scanner Button */
         .scanner-box {
             position: relative;
-            width: 170px;
-            height: 170px;
+            width: 180px;
+            height: 180px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            margin: 20px auto;
+            margin: 10px auto;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         svg.ring-svg {
@@ -115,19 +114,19 @@
             stroke-linecap: round;
         }
 
-        .fingerprint-icon {
-            font-size: 4.5rem;
-            color: #ff4d6d;
-            filter: drop-shadow(0 0 12px rgba(255, 77, 109, 0.6));
-            transition: 0.3s;
+        .heart-icon {
+            font-size: 4rem;
+            color: #ff3366;
+            animation: pulseHeart 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 51, 102, 0.6));
         }
-        .scanner-box:active .fingerprint-icon {
-            transform: scale(0.92);
-            color: #ff99aa;
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.18); }
         }
 
         .hint-text {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 0.9rem;
             color: #ff99aa;
             letter-spacing: 0.5px;
@@ -138,7 +137,7 @@
             50% { opacity: 1; }
         }
 
-        /* Letter & Message screen */
+        /* Letter screen */
         .card-box {
             background: rgba(18, 7, 11, 0.85);
             backdrop-filter: blur(16px);
@@ -214,7 +213,7 @@
     </div>
 
     <div class="container">
-        <!-- Screen 1: Fingerprint Scanner -->
+        <!-- Screen 1: Heart Scanner -->
         <div id="scr1" class="screen active">
             <div class="title-top">Para ti, mi amor</div>
             
@@ -223,10 +222,10 @@
                     <circle class="ring-bg" cx="100" cy="100" r="80"></circle>
                     <circle class="ring-progress" id="ringProgress" cx="100" cy="100" r="80"></circle>
                 </svg>
-                <div class="fingerprint-icon">🫥</div>
+                <div class="heart-icon">❤️</div>
             </div>
 
-            <div class="hint-text" id="hintText">دەستت لەسەر پەنجەمۆرەکە ڕاگرە ❤️</div>
+            <div class="hint-text" id="hintText">دەستت لەسەر دڵەکە ڕاگرە ✨</div>
         </div>
 
         <!-- Screen 2: Revealed Letter -->
@@ -246,7 +245,6 @@
     </div>
 
     <script>
-        // Floating particles background
         const container = document.getElementById('particles');
         setInterval(() => {
             const p = document.createElement('div');
@@ -264,17 +262,15 @@
         const music = document.getElementById('bgMusic');
         let musicPlaying = false;
 
-        const circumference = 2 * Math.PI * 80; // 502
+        const circumference = 2 * Math.PI * 80;
         ringProgress.style.strokeDasharray = circumference;
 
-        let holdTimer = null;
         let progressInterval = null;
         let progress = 0;
 
         function startScanning(e) {
             e.preventDefault();
             
-            // Play music on touch
             if (!musicPlaying) {
                 music.play().then(() => {
                     musicPlaying = true;
@@ -283,7 +279,7 @@
                 }).catch(e => {});
             }
 
-            hintText.innerText = "سکان دەکرێت...";
+            hintText.innerText = "دڵ خەریکی خوێندنەوەیە...";
             
             progressInterval = setInterval(() => {
                 progress += 2;
@@ -292,7 +288,7 @@
 
                 if (progress >= 100) {
                     clearInterval(progressInterval);
-                    hintText.innerText = "پەنجەمۆر ناسراوە ✨";
+                    hintText.innerText = "خۆشەویستی ناسراوە ✨";
                     setTimeout(() => {
                         document.getElementById('scr1').classList.remove('active');
                         document.getElementById('scr2').classList.add('active');
@@ -307,11 +303,10 @@
                 clearInterval(progressInterval);
                 progress = 0;
                 ringProgress.style.strokeDashoffset = circumference;
-                hintText.innerText = "دەستت لەسەر پەنجەمۆرەکە ڕاگرە ❤️";
+                hintText.innerText = "دەستت لەسەر دڵەکە ڕاگرە ✨";
             }
         }
 
-        // Touch & Mouse events for holding fingerprint
         scannerBtn.addEventListener('mousedown', startScanning);
         scannerBtn.addEventListener('mouseup', stopScanning);
         scannerBtn.addEventListener('mouseleave', stopScanning);
